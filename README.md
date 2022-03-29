@@ -124,6 +124,118 @@ h1 {
 }
 ```
 
+Atau kita bisa memberikan argument dengan cara
+
+```scss
+@mixin flexbox($direction: row, $space: center) {
+    display: flex;
+    justify-content: $space;
+    align-items: center;
+    flex-direction: $direction;
+}
+
+.container {
+    @include flexbox(row-reverse, space-around)
+    width: 600px;
+    height: 400px;
+    background-color: #eaeaea;
+    .box {
+        width: 60px;
+        height: 60px;
+        background-color: bisque;
+        text-align: center;
+        line-height: 60px;
+    }
+}
+```
+
+# Modules
+
+## @import
+
+> Import ini tidak direkomendasikan. Karena sifatnya yang terlalu global jadinya akan terbaca semua.
+
+_mixin.scss
+
+```scss
+@mixin flexbox($direction: row, $space: center) {
+    display: flex;
+    justify-content: $space;
+    align-items: center;
+    flex-direction: $direction;
+}
+```
+
+main.scss
+
+```scss
+@import 'mixin';
+
+.container {
+    @include flexbox(row-reverse, space-around)
+    width: 600px;
+    height: 400px;
+    background-color: #eaeaea;
+    .box {
+        width: 60px;
+        height: 60px;
+        background-color: bisque;
+        text-align: center;
+        line-height: 60px;
+    }
+}
+```
+
+## @use
+
+> Use direkomendasikan. Tetapi harus install terlebih dahulu SASS menggunakan Command Line.
+
+Cara Install:
+
+1. Ketik di terminal `sudo npm instal -g sass`
+2. Cek version `sass --version`
+
+Cara Build ke CSS:
+
+`sass folderscss/file.scss foldercss/file.css`
+
+main.scss
+
+```scss
+@use 'container';
+```
+
+_mixin.scss
+
+```scss
+@mixin flex-box($direction: row, $space: center){
+    display: flexbox;
+    justify-content: $space;
+    align-items: center;
+    flex-direction: $direction;
+}
+```
+
+_container.scss
+
+```scss
+@use 'mixin' as m;
+
+.container {
+    @include m.flex-box(row-reverse, space-between);
+    width: 600px;
+    height: 400px;
+    background-color: #eaeaea;
+    .box {
+        width: 60px;
+        height: 60px;
+        background-color: bisque;
+        text-align: center;
+        line-height: 60px;
+    }
+}
+```
+
 # Daftar Pustaka
 
 > Sumber belajar: https://www.w3schools.com/sass/default.php
